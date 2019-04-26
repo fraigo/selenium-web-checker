@@ -21,5 +21,9 @@
   "homepage": "https://github.com/fraigo/selenium-web-checker#readme",
   "dependencies": {
     "webdriver-sync": "^1.0.1"
-  }
+  },
+  "bin": {
+    "selenium-web-checker ": "./index.js"
+  },
+  "preferGlobal": true
 }
