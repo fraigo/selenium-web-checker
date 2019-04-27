@@ -10,7 +10,7 @@ var analyze = function(url){
 		
 		var elements=document.body;
 		var result=[];
-		var checkElements=function(e){
+		var checkElements=function(e,spc){
 			for(var i=0;i<e.childNodes.length;i++){
 				var el=e.childNodes[i];
 				if (el.offsetParent){
@@ -34,15 +34,15 @@ var analyze = function(url){
 							props["text"] = el.innerText;
 						}
 					}
-					result.push(JSON.stringify(props));
+					result.push(spc+JSON.stringify(props));
 					if (el.childNodes && el.childNodes.length>0){
-						checkElements(el);
+						checkElements(el,spc+"  ");
 					}
 				}
 			}
 		}
 
-		checkElements(elements);
+		checkElements(elements,"");
 		
 		callback(result);
 		`)
