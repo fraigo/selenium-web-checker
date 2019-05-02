@@ -1,6 +1,4 @@
-var driver = require('./driver.js');
-
-var analyze = function(url){
+var analyze = function(driver,url){
 	console.log("===",url,"===");
 	driver.get(url);
 
