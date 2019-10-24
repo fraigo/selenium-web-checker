@@ -1,6 +1,6 @@
 {
   "name": "selenium-web-checker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Selenium web checker",
   "main": "index.js",
   "scripts": {
