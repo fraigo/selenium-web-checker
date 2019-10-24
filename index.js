@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 // Delete the 0 and 1 argument (node and script.js)
+const {Builder, By, Key, until} = require('selenium-webdriver');
+
 var args = process.argv.splice(process.execArgv.length + 2);
 var params = {
     baseURL : args[1],
@@ -25,10 +27,15 @@ if (params.height>0){
     config.height = params.height*1;
 }
 
-var wd = require('webdriver-sync');
 
-var driver = require('./driver.js');
-driver.initialize(config);
+var chrome = require('selenium-webdriver/chrome');
+const screen = {
+    width: config.width,
+    height: config.height
+};
+var driver = new Builder().forBrowser('chrome')
+    .setChromeOptions(new chrome.Options().headless().windowSize(screen))
+    .build();
 
 var analyze = require('./analyze.js');
 
@@ -39,14 +46,14 @@ function analyze_list(list,baseURL){
         if (baseURL){
             url = baseURL + url;
         }
-        analyze(driver,url);
+        analyze(driver,config,url);
         if (item.submit){
             for(var key in item.submit){
-                driver.findElement(wd.By.name(key)).sendKeys(item.submit[key]);
+                driver.findElement(By.name(key)).sendKeys(item.submit[key]);
             }    
         }
         if (item.click){
-            driver.findElement(wd.By.name(item.click)).click();    
+            driver.findElement(By.name(item.click)).click();    
         }    
     }    
     driver.quit();
@@ -54,7 +61,6 @@ function analyze_list(list,baseURL){
 
 
 if (fs.existsSync(params.file)){
-    //console.log("Opening "+ file);
     fs.readFile(params.file, 'utf8', function(err, data) {  
         var baseURL = null;
         if (err) {
