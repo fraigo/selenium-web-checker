@@ -1,6 +1,7 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
 
-var analyze = function(driver,config,url, callBack){
+var analyze = function(driver,config,item, callBack){
+	var url = item.fullURL;
 	driver.get(url);
 	var result=driver
 		.executeAsyncScript(`
@@ -45,7 +46,7 @@ var analyze = function(driver,config,url, callBack){
 		callback(result);
 		`)
 		result.then(function(list){
-			callBack(list,url);
+			callBack(list,item);
 		});
 }
 

@@ -8,12 +8,12 @@ var params = {
     width : args[2],
     height : args[3]
 }
-params.file = args[0];
+var outputFile = args[0];
 
 var fs = require('fs');
 var list = [];
 
-if (!params.file){
+if (!outputFile){
     console.error("Usage: selenium-web-checker [url|config.json] [baseurl] [width] [height]");
     return;
 }
@@ -40,17 +40,17 @@ var analyze = require('./analyze.js');
 
 function analyze_list(list,params){
     var baseURL = params.baseURL;
-    console.log(params);
+    console.log(JSON.stringify(params));
     for(var index in list){
         var item=list[index];
-        var url = item.url;
+        item.fullURL = item.url;
         if (baseURL){
-            url = baseURL + url;
+            item.fullURL = baseURL + item.url;
         }
-        analyze(driver,config,url, function(list,url){
-            console.log("===",url,"===");
-			list.forEach(function(item){
-				console.log(item);
+        analyze(driver,params,item, function(list,item){
+            console.log("===",item.url,"===");
+			list.forEach(function(result){
+				console.log(result);
 			})
         });
         if (item.submit){
@@ -66,8 +66,8 @@ function analyze_list(list,params){
 }
 
 
-if (fs.existsSync(params.file)){
-    fs.readFile(params.file, 'utf8', function(err, data) {  
+if (fs.existsSync(outputFile)){
+    fs.readFile(outputFile, 'utf8', function(err, data) {  
         var baseURL = null;
         if (err) {
             
@@ -83,5 +83,5 @@ if (fs.existsSync(params.file)){
 
     });
 }else{
-    analyze_list([{url:params.file}],params);
+    analyze_list([{url:outputFile}],params);
 }
