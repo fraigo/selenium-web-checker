@@ -40,6 +40,7 @@ var analyze = require('./analyze.js');
 
 function analyze_list(list,params){
     var baseURL = params.baseURL;
+    console.log(params);
     for(var index in list){
         var item=list[index];
         var url = item.url;
