@@ -4,6 +4,13 @@ Automation script to record and track visual changes in web sites.
 
 ## Usage
 
+### Installation
+
+```bash
+npm install -g selenium-web-checker
+```
+
+
 ### Basic usage (URL check)
 
 `selenium-web-checker URL [BaseURL] [width] [height]`
