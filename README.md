@@ -7,6 +7,9 @@ Automation script to record and track visual changes in web sites.
 ### Installation
 
 ```bash
+# chromedriver required
+npm install -g chromedriver
+# module install
 npm install -g selenium-web-checker
 ```
 

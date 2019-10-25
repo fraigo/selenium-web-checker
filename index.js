@@ -8,7 +8,6 @@ var params = {
     width : args[2],
     height : args[3]
 }
-console.log(params);
 params.file = args[0];
 
 var fs = require('fs');
@@ -39,14 +38,20 @@ var driver = new Builder().forBrowser('chrome')
 
 var analyze = require('./analyze.js');
 
-function analyze_list(list,baseURL){
+function analyze_list(list,params){
+    var baseURL = params.baseURL;
     for(var index in list){
         var item=list[index];
         var url = item.url;
         if (baseURL){
             url = baseURL + url;
         }
-        analyze(driver,config,url);
+        analyze(driver,config,url, function(list,url){
+            console.log("===",url,"===");
+			list.forEach(function(item){
+				console.log(item);
+			})
+        });
         if (item.submit){
             for(var key in item.submit){
                 driver.findElement(By.name(key)).sendKeys(item.submit[key]);
@@ -71,10 +76,11 @@ if (fs.existsSync(params.file)){
             if (params.baseURL){
                 baseURL = params.baseURL;
             }
-            analyze_list(list,baseURL);
+            params.baseURL= baseURL;
+            analyze_list(list,params);
         }
 
     });
 }else{
-    analyze_list([{url:params.file}],params.baseURL);
+    analyze_list([{url:params.file}],params);
 }
