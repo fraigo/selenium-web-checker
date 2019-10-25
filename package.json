@@ -23,7 +23,7 @@
     "selenium-webdriver": "^3.6.0"
   },
   "bin": {
-    "selenium-web-checker ": "./index.js"
+    "selenium-web-checker": "./index.js"
   },
   "preferGlobal": true
 }
