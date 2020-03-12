@@ -7,7 +7,7 @@ var analyze = function(driver,config,item, callBack, screenshotPath){
 		driver.takeScreenshot().then(
 			function(image, err) {
 				require('fs').writeFile(screenshotPath, image, 'base64', function(err) {
-					console.log(err);
+					if (err) console.log("Screenshot error : "+err);
 				});
 			}
 		);	
