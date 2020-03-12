@@ -6,7 +6,8 @@ var args = process.argv.splice(process.execArgv.length + 2);
 var params = {
     baseURL : args[1],
     width : args[2],
-    height : args[3]
+    height : args[3],
+    output : args[4]
 }
 var outputFile = args[0];
 
@@ -38,11 +39,15 @@ var driver = new Builder().forBrowser('chrome')
 
 var analyze = require('./analyze.js');
 
-function analyze_list(list,params){
+function analyze_list(list,params,screenshots){
     var baseURL = params.baseURL;
     console.log(JSON.stringify(params));
     for(var index in list){
         var item=list[index];
+        var screenShotFile = outputFile.replace('.json','')+"_"+(item.id?item.id:index)+".png";
+        if (!screenshots){
+            screenShotFile = null;
+        }
         item.fullURL = item.url;
         if (baseURL){
             item.fullURL = baseURL + item.url;
@@ -52,7 +57,7 @@ function analyze_list(list,params){
 			list.forEach(function(result){
 				console.log(result);
 			})
-        });
+        }, screenShotFile);
         if (item.submit){
             for(var key in item.submit){
                 driver.findElement(By.name(key)).sendKeys(item.submit[key]);
@@ -72,13 +77,14 @@ if (fs.existsSync(outputFile)){
         if (err) {
             
         }else{
-            list = JSON.parse(data).pages;
-            baseURL = JSON.parse(data).baseURL;
+            var configData = JSON.parse(data);
+            list = configData.pages;
+            baseURL = configData.baseURL;
             if (params.baseURL){
                 baseURL = params.baseURL;
             }
             params.baseURL= baseURL;
-            analyze_list(list,params);
+            analyze_list(list,params,configData.screenshots);
         }
 
     });

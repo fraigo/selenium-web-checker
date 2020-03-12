@@ -29,8 +29,10 @@ Where config.json is a configuration file with a list of pages to test:
 ```json
 {
     "baseURL" : "http://192.168.99.100",
+    "screenshots" : true,
     "pages" : [
         { 
+            "id" : "login",
             "url" : "/user/login", 
             "submit": {
                 "email" : "user@site.com",
@@ -39,6 +41,7 @@ Where config.json is a configuration file with a list of pages to test:
             "click": "submit"
         },
         {
+            "id" : "home",
             "url" : "/home"
         }
     ]
@@ -48,6 +51,7 @@ Where config.json is a configuration file with a list of pages to test:
 ### Additional parameters
 
 * `baseURL` : (Optional) To test pages with a different base URL (overwrites baseURL in config.json)
+* `screenshots` : `true` to activate screenshots by page (it uses `id` attribute to name file, or the page position in config if no `id` is defined )
 * `width`  : Browser window width (default: 1200)
 * `height` : Browser window height (default: 900)
 

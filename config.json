@@ -1,10 +1,13 @@
 {
     "baseURL" : "https://www.npmjs.com",
+    "screenshots" : true,
     "pages" : [
         {
+            "id"  : "selenium-web-checker",
             "url" : "/package/selenium-web-checker"
         },
         {
+            "id"  : "chromedriver",
             "url" : "/package/chromedriver"
         }
     ]
