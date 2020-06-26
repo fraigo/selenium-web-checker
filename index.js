@@ -57,22 +57,25 @@ function analyze_list(list,params,screenshots){
         if (item.actions){
             for(var idx in item.actions){
                 var action = item.actions[idx];
-                //console.error("Waiting "+(new Date()).getTime());
-                driver.wait(until.elementLocated(By.xpath(action.xpath)), 1000);
-                //console.error("Ready "+(new Date()).getTime());
-                var el = driver.findElement(By.xpath(action.xpath) );
-                if (el){
-                    if (action.submit){
-                        if (item.debug){
-                            console.error("Submit "+action.xpath+" "+action.submit)
+                if (action.xpath){
+                    //console.error("Waiting "+(new Date()).getTime());
+                    driver.wait(until.elementLocated(By.xpath(action.xpath)), 1000);
+                    //console.error("Ready "+(new Date()).getTime());
+                    var el = driver.findElement(By.xpath(action.xpath) );
+                    if (el){
+                        if (action.submit){
+                            if (item.debug){
+                                console.error("Submit "+action.xpath+" "+action.submit)
+                            }
+                            el.sendKeys(action.submit);
                         }
-                        el.sendKeys(action.submit);
-                    }
-                    if (action.click){
-                        if (item.debug){
-                            console.error("Click "+action.xpath);
+                        if (action.click){
+                            if (item.debug){
+                                console.error("Click "+action.xpath);
+                            }
+                            el.click();    
                         }
-                        el.click();    
+                        
                     }
                 }
             }    

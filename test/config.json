@@ -9,8 +9,7 @@
             "actions" :  [
                 {
                     "xpath" : "//input[@name='q']",
-                    "submit" : "chromedriver",
-                    "click" : true
+                    "submit" : "chromedriver"
                 },
                 {
                     "xpath" : "//button[@type='submit']",
