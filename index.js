@@ -57,11 +57,9 @@ function analyze_list(list,params,screenshots){
         if (item.actions){
             for(var idx in item.actions){
                 var action = item.actions[idx];
-                driver.wait(function() {
-                    return driver.findElement(By.xpath(action.xpath)).catch(function(){
-                        console.error("Can't find "+action.path)
-                    });
-                  }, 1000);
+                //console.error("Waiting "+(new Date()).getTime());
+                driver.wait(until.elementLocated(By.xpath(action.xpath)), 1000);
+                //console.error("Ready "+(new Date()).getTime());
                 var el = driver.findElement(By.xpath(action.xpath) );
                 if (el){
                     if (action.submit){
