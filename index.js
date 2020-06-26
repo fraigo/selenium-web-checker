@@ -52,20 +52,38 @@ function analyze_list(list,params,screenshots){
         if (baseURL){
             item.fullURL = baseURL + item.url;
         }
-        analyze(driver,params,item, function(list,item){
-            console.log("===",item.url,"===");
-			list.forEach(function(result){
-				console.log(result);
-			})
-        }, screenShotFile);
-        if (item.submit){
-            for(var key in item.submit){
-                driver.findElement(By.name(key)).sendKeys(item.submit[key]);
+        var url = item.fullURL;
+        driver.get(url);    
+        if (item.actions){
+            for(var idx in item.actions){
+                var action = item.actions[idx];
+                driver.wait(function() {
+                    return driver.findElement(By.xpath(action.xpath)).catch(function(){});
+                  }, 1000);
+                var el = driver.findElement(By.xpath(action.xpath) );
+                if (el){
+                    if (action.submit){
+                        if (item.debug){
+                            console.error("Submit "+action.xpath+" "+action.submit)
+                        }
+                        el.sendKeys(action.submit);
+                    }
+                    if (action.click){
+                        if (item.debug){
+                            console.error("Click "+action.xpath);
+                        }
+                        el.click();    
+                    }
+                }
             }    
         }
-        if (item.click){
-            driver.findElement(By.name(item.click)).click();    
-        }    
+        analyze(driver,params,item, function(list,item){
+            console.log("===",item.url,"===");
+            list.forEach(function(result){
+                console.log(result);
+            })
+        }, screenShotFile);
+        
     }    
     driver.quit();
 }

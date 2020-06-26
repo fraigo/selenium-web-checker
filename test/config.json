@@ -1,0 +1,26 @@
+{
+    "baseURL" : "https://www.npmjs.com",
+    "screenshots" : true,
+    "pages" : [
+        {
+            "id"  : "search",
+            "url" : "/",
+            "debug" : true,
+            "actions" :  [
+                {
+                    "xpath" : "//input[@name='q']",
+                    "submit" : "chromedriver",
+                    "click" : true
+                },
+                {
+                    "xpath" : "//button[@type='submit']",
+                    "click" : true
+                }
+            ]
+        },
+        {
+            "id"  : "chromedriver",
+            "url" : "/package/chromedriver"
+        }
+    ]
+}

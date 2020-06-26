@@ -3,3 +3,4 @@ node_modules
 *.png
 results*.txt
 config-test.json
+test/result.txt

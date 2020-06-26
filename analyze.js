@@ -1,8 +1,6 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
 
 var analyze = function(driver,config,item, callBack, screenshotPath){
-	var url = item.fullURL;
-	driver.get(url);
 	var result=driver
 		.executeAsyncScript(`
 		var callback = arguments[arguments.length-1]; 
