@@ -4,3 +4,4 @@ node_modules
 results*.txt
 config-test.json
 test/result.txt
+test/*.log
