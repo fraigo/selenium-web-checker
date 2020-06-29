@@ -30,15 +30,25 @@ Where config.json is a configuration file with a list of pages to test:
 {
     "baseURL" : "http://192.168.99.100",
     "screenshots" : true,
+    "fileOutput" : true,
     "pages" : [
         { 
             "id" : "login",
             "url" : "/user/login", 
-            "submit": {
-                "email" : "user@site.com",
-                "password" : "User.123"
-            },
-            "click": "submit"
+            "actions" :  [
+                {
+                    "xpath" : "//input[@name='user']",
+                    "submit" : "username"
+                },
+                {
+                    "xpath" : "//input[@name='password']",
+                    "submit" : "password"
+                },
+                {
+                    "xpath" : "//button[@type='submit']",
+                    "click" : true
+                }
+            ]
         },
         {
             "id" : "home",

@@ -1,6 +1,7 @@
 {
     "baseURL" : "https://www.npmjs.com",
     "screenshots" : true,
+    "fileOutput" : true,
     "pages" : [
         {
             "id"  : "search",

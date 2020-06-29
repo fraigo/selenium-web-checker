@@ -81,10 +81,16 @@ function analyze_list(list,params,screenshots){
             }    
         }
         analyze(driver,params,item, function(list,item){
-            console.log("===",item.url,"===");
-            list.forEach(function(result){
-                console.log(result);
-            })
+            if (params.fileOutput){
+                var resultFile = outputFile.replace('.json','')+"_"+(item.id?item.id:index)+".log";
+                console.log("Saving to ", resultFile);
+                fs.writeFileSync(resultFile, list.join("\n"));    
+            }else{
+                console.log("===",item.url,"===");
+                list.forEach(function(result){
+                    console.log(result);
+                })    
+            }
         }, screenShotFile);
         
     }    
@@ -105,6 +111,7 @@ if (fs.existsSync(outputFile)){
                 baseURL = params.baseURL;
             }
             params.baseURL= baseURL;
+            params.fileOutput = configData.fileOutput;
             analyze_list(list,params,configData.screenshots);
         }
 
