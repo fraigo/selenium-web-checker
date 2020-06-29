@@ -1,5 +1,8 @@
 # Selenium Web Checker
 
+![npm](https://img.shields.io/npm/v/selenium-web-checker)
+
+
 Automation script to record and track visual changes in web sites.
 
 ## Usage
