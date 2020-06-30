@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 // Delete the 0 and 1 argument (node and script.js)
-const {Builder, By, Key, until} = require('selenium-webdriver');
+
+if (require.main !== module) {
+    console.log('required as a module');
+    return;
+}
 
 var args = process.argv.splice(process.execArgv.length + 2);
 var params = {
@@ -27,76 +31,10 @@ if (params.height>0){
     config.height = params.height*1;
 }
 
+var webdriver = require('./webdriver.js');
+var driver = webdriver(config);
 
-var chrome = require('selenium-webdriver/chrome');
-const screen = {
-    width: config.width,
-    height: config.height
-};
-var driver = new Builder().forBrowser('chrome')
-    .setChromeOptions(new chrome.Options().headless().windowSize(screen))
-    .build();
-
-var analyze = require('./analyze.js');
-
-function analyze_list(list,params,screenshots){
-    var baseURL = params.baseURL;
-    console.log(JSON.stringify(params));
-    for(var index in list){
-        var item=list[index];
-        var screenShotFile = outputFile.replace('.json','')+"_"+(item.id?item.id:index)+".png";
-        if (!screenshots){
-            screenShotFile = null;
-        }
-        item.fullURL = item.url;
-        if (baseURL){
-            item.fullURL = baseURL + item.url;
-        }
-        var url = item.fullURL;
-        driver.get(url);    
-        if (item.actions){
-            for(var idx in item.actions){
-                var action = item.actions[idx];
-                if (action.xpath){
-                    //console.error("Waiting "+(new Date()).getTime());
-                    driver.wait(until.elementLocated(By.xpath(action.xpath)), 1000);
-                    //console.error("Ready "+(new Date()).getTime());
-                    var el = driver.findElement(By.xpath(action.xpath) );
-                    if (el){
-                        if (action.submit){
-                            if (item.debug){
-                                console.error("Submit "+action.xpath+" "+action.submit)
-                            }
-                            el.sendKeys(action.submit);
-                        }
-                        if (action.click){
-                            if (item.debug){
-                                console.error("Click "+action.xpath);
-                            }
-                            el.click();    
-                        }
-                        
-                    }
-                }
-            }    
-        }
-        analyze(driver,params,item, function(list,item){
-            if (params.fileOutput){
-                var resultFile = outputFile.replace('.json','')+"_"+(item.id?item.id:index)+".log";
-                console.log("Saving to ", resultFile);
-                fs.writeFileSync(resultFile, list.join("\n"));    
-            }else{
-                console.log("===",item.url,"===");
-                list.forEach(function(result){
-                    console.log(result);
-                })    
-            }
-        }, screenShotFile);
-        
-    }    
-    driver.quit();
-}
-
+var analyze_list = require('./analyze_list.js');
 
 if (fs.existsSync(outputFile)){
     fs.readFile(outputFile, 'utf8', function(err, data) {  
@@ -111,11 +49,16 @@ if (fs.existsSync(outputFile)){
                 baseURL = params.baseURL;
             }
             params.baseURL= baseURL;
-            params.fileOutput = configData.fileOutput;
-            analyze_list(list,params,configData.screenshots);
+            if (configData.screenshots){
+                params.screenshotFile = outputFile.replace('.json','')+"_{ID}.png";
+            }
+            if (configData.fileOutput){
+                params.resultFile = outputFile.replace('.json','')+"_{ID}.log";
+            }
+            analyze_list(driver,list,params);
         }
 
     });
 }else{
-    analyze_list([{url:outputFile}],params);
+    analyze_list(driver,[{url:outputFile}],params);
 }
