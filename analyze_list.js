@@ -12,7 +12,7 @@ function analyze_list(driver,list,params){
         var screenShotFile = null;
         var isDebug = params.debug?params.debug:item.debug;
         if (params.screenshotFile){
-            screenShotFile = params.screenshotFile.replace("{ID}",item.id?item.id:index);
+            item.screenShotFile = params.screenshotFile.replace("{ID}",item.id?item.id:index);
         }
         if (params.resultFile){
             item.resultFile = params.resultFile.replace("{ID}",item.id?item.id:index);
@@ -62,7 +62,18 @@ function analyze_list(driver,list,params){
                     console.log(result);
                 })    
             }
-        }, screenShotFile);
+            if (item.screenShotFile){
+                driver.sleep(100);
+                console.log("Screenshot", item.screenShotFile);
+				driver.takeScreenshot().then(
+					function(image, err) {
+						require('fs').writeFile(item.screenShotFile, image, 'base64', function(err) {
+							if (err) console.error("Screenshot error : "+err);
+						});
+					}
+				);
+			}
+        });
     }    
     driver.quit();
 }
