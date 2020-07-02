@@ -45,18 +45,14 @@ var analyze = function(driver,config,item, callBack, screenshotPath){
 		`)
 		result.then(function(list){
 			if (screenshotPath){
-				driver.sleep(1000)
-				driver.executeScript('var videos = document.querySelectorAll("video"); for(video of videos) {video.pause(); video.currentTime=0;}').then(
-					function(return1){
-						driver.takeScreenshot().then(
-							function(image, err) {
-								require('fs').writeFile(screenshotPath, image, 'base64', function(err) {
-									if (err) console.log("Screenshot error : "+err);
-								});
-							}
-						);		
+				driver.sleep(1000);
+				driver.takeScreenshot().then(
+					function(image, err) {
+						require('fs').writeFile(screenshotPath, image, 'base64', function(err) {
+							if (err) console.log("Screenshot error : "+err);
+						});
 					}
-				)
+				);
 			}
 			callBack(list,item);
 		});
