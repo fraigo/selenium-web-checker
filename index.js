@@ -50,6 +50,7 @@ if (fs.existsSync(outputFile)){
             }
             params.baseURL= baseURL;
             params.debug = configData.debug;
+            params.screenshotDelay = configData.screenshotDelay;
             if (configData.screenshots){
                 params.screenshotFile = outputFile.replace('.json','')+"_{ID}.png";
             }
