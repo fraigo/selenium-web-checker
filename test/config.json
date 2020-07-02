@@ -2,11 +2,11 @@
     "baseURL" : "https://www.npmjs.com",
     "screenshots" : true,
     "fileOutput" : true,
+    "debug" : true,
     "pages" : [
         {
             "id"  : "search",
             "url" : "/",
-            "debug" : true,
             "actions" :  [
                 {
                     "xpath" : "//input[@name='q']",

@@ -1,1 +1,1 @@
-node index.js test/config.json > test/result.txt
+node index.js test/config.json
