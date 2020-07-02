@@ -1,7 +1,7 @@
 {
     "baseURL" : "https://www.npmjs.com",
     "screenshots" : true,
-    "screenshotDelay" : 200,
+    "delay" : 200,
     "fileOutput" : true,
     "debug" : true,
     "pages" : [
@@ -22,7 +22,7 @@
         {
             "id"  : "chromedriver",
             "url" : "/package/chromedriver",
-            "screenshotDelay" : 3000
+            "delay" : 3000
         }
     ]
 }

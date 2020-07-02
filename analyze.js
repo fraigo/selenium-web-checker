@@ -1,6 +1,8 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
 
 var analyze = function(driver,config,item, callBack){
+	var delay=item.delay?item.delay:(config.delay?config.delay:1000);
+	driver.sleep(delay);
 	var result=driver
 		.executeAsyncScript(`
 		var callback = arguments[arguments.length-1]; 

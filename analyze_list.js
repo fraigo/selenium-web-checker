@@ -63,15 +63,13 @@ function analyze_list(driver,list,params){
                 })    
             }
             if (item.screenShotFile){
-                var delay=item.screenshotDelay?item.screenshotDelay:(params.screenshotDelay?params.screenshotDelay:1000);
-                driver.sleep(delay);
 				driver.takeScreenshot().then(
 					function(image, err) {
 						require('fs').writeFile(item.screenShotFile, image, 'base64', function(err) {
 							if (err){
                                 console.error("Screenshot error",err);
                             }else{
-                                console.log("Screenshot", item.screenShotFile, delay);
+                                console.log("Screenshot", item.screenShotFile);
                             }
 						});
 					}
