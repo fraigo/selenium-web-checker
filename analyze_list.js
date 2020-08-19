@@ -2,6 +2,20 @@ const {Builder, By, Key, until} = require('selenium-webdriver');
 var analyze = require('./analyze.js');
 var fs = require('fs');
 
+function takeScreenshot(driver, screenShotFile){
+    driver.takeScreenshot().then(
+        function(image, err) {
+            require('fs').writeFile(screenShotFile, image, 'base64', function(err) {
+                if (err){
+                    console.error("Screenshot error",err);
+                }else{
+                    console.log("Screenshot", screenShotFile);
+                }
+            });
+        }
+    );
+}
+
 function analyze_list(driver,list,params){
     var baseURL = params.baseURL;
     if (params.debug){
@@ -63,17 +77,7 @@ function analyze_list(driver,list,params){
                 })    
             }
             if (item.screenShotFile){
-				driver.takeScreenshot().then(
-					function(image, err) {
-						require('fs').writeFile(item.screenShotFile, image, 'base64', function(err) {
-							if (err){
-                                console.error("Screenshot error",err);
-                            }else{
-                                console.log("Screenshot", item.screenShotFile);
-                            }
-						});
-					}
-				);
+				takeScreenshot(driver, item.screenShotFile);
 			}
         });
     }    

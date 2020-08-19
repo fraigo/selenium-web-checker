@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ "$1" == "" ]; then
-	echo "Usage: $0 version|patch|minor|major"
+	echo "Usage: $0 patch|minor|major|version"
 	exit 1
 fi
 

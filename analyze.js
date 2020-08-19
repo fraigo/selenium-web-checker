@@ -5,6 +5,13 @@ var analyze = function(driver,config,item, callBack){
 	driver.sleep(delay);
 	var result=driver
 		.executeAsyncScript(`
+
+		// stop videos and reset position
+		var videos = document.querySelectorAll("video"); 
+		for(video of videos) {
+			video.pause(); video.currentTime=0;
+		}
+
 		var callback = arguments[arguments.length-1]; 
 		
 		var elements=document.body;
