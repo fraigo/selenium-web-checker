@@ -25,9 +25,9 @@ Example : `selenium-web-checker / https://www.google.com 1024 768`
 
 ### Advanced usage
 
-`selenium-web-checker [config.json] [BaseURL] [width] [height]`
+`selenium-web-checker config.json [BaseURL|''] [width] [height] [outputPath]`
 
-Where config.json is a configuration file with a list of pages to test:
+Where config.json is a JSON configuration file with a list of pages to test:
 
 ```json
 {
@@ -65,10 +65,27 @@ Where config.json is a configuration file with a list of pages to test:
 
 * `baseURL` : (Optional) To test pages with a different base URL (overwrites baseURL in config.json)
 * `screenshots` : `true` to activate screenshots by page (it uses `id` attribute to name file, or the page position in config if no `id` is defined )
+* `fileOutput` : `true` to activate file output separated logs (one by each page)
 * `width`  : Browser window width (default: 1200)
 * `height` : Browser window height (default: 900)
 
 ### Results
 
 The results are written in a JSON-like format. It includes visual information about HTML dom elements (position, width, height, margin, padding)
+You can make diffs with previous versions to check what's changing between scannings.
+
+```
+{"tag":"DIV","id":"app","orig":"242.5px 150px","w":"485px","h":"300px","nodes":1,"text":""}
+  {"tag":"DIV","orig":"242.5px 150px","w":"485px","h":"300px","nodes":3}
+    {"tag":"UL","orig":"242.5px 0px","w":"485px","nodes":0}
+    {"tag":"DIV","orig":"242.5px 150px","w":"485px","h":"300px","nodes":3}
+      {"tag":"HEADER","orig":"242.5px 108.5px","w":"485px","h":"217px","nodes":4}
+        {"tag":"DIV","id":"header","orig":"121.25px 38px","w":"242.5px","h":"76px","pd":"10px","nodes":7}
+          {"tag":"A","orig":"0px 0px","w":"auto","h":"auto","nodes":1,"text":"skip to package search"}
+          {"tag":"A","orig":"0px 0px","w":"auto","h":"auto","nodes":1,"text":"skip to main content"}
+          {"tag":"SPAN","orig":"0px 0px","w":"auto","h":"auto","nodes":4}
+            {"tag":"A","orig":"0px 0px","w":"auto","h":"auto","nodes":1,"text":"skip to sign up"}
+            {"tag":"A","orig":"0px 0px","w":"auto","h":"auto","nodes":1,"text":"skip to sign in"}
+          {"tag":"A","orig":"0px 0px","w":"auto","h":"auto","nodes":1,"text":"skip to footer"}
+```
 
