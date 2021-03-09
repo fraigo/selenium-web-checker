@@ -10,6 +10,7 @@ var analyze = function(driver,config,item, callBack){
 		var videos = document.querySelectorAll("video"); 
 		for(video of videos) {
 			video.pause(); video.currentTime=0;
+			video.style.filter='brightness(0)';
 		}
 
 		var callback = arguments[arguments.length-1]; 

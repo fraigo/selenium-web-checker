@@ -1,0 +1,13 @@
+{
+    "baseURL" : "https://www.learningcontainer.com",
+    "screenshots" : true,
+    "delay" : 200,
+    "fileOutput" : true,
+    "debug" : true,
+    "pages" : [
+        {
+            "id"  : "video",
+            "url" : "/mp4-sample-video-files-download/"
+        }
+    ]
+}
