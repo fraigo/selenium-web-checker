@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/fraigo/selenium-web-checker#readme",
   "dependencies": {
-    "selenium-webdriver": "^3.6.0"
+    "selenium-webdriver": "^4.8.2"
   },
   "bin": {
     "selenium-web-checker": "./index.js"
